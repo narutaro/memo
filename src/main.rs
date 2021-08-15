@@ -29,6 +29,10 @@ fn list(db: &RecordData) {
     }
 }
 
+fn add_memo(db: &mut RecordData, memo: String) {
+    db.add_record(memo);
+}
+
 fn main() {
     //
     // Serde
@@ -55,8 +59,9 @@ fn main() {
     // DB
     //
     let mut db = new_empty_database();
-    db.add_record(serialized);
-    db.save_database("memo.db");
+    //db.add_record(serialized);
+    add_memo(&mut db, "added by add_memo()".to_string());
+    //db.save_database("memo.db");
     list(&db);
 
     //
