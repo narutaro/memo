@@ -3,15 +3,15 @@ use structopt::StructOpt;
 #[derive(Debug)]
 struct Memo {
     id: isize,
-    name: String,
-    pri: isize,
+    body: String,
+    star: bool,
 }
 
 #[derive(StructOpt, Debug)]
 /// Help you take notes
 enum Opt {
     /// add a memo
-    Add { name: String },
+    Add { body: String },
     /// delete a memo
     Del { id: String },
     /// list memos
@@ -21,18 +21,18 @@ enum Opt {
 fn main() {
     let memo1 = Memo {
         id: 1,
-        name: String::from("my first memo"),
-        pri: 1,
+        body: String::from("my first memo"),
+        star: true,
     };
     let memo2 = Memo {
         id: 2,
-        name: String::from("my second memo"),
-        pri: 1,
+        body: String::from("my second memo"),
+        star: false,
     };
     let memo3 = Memo {
         id: 3,
-        name: String::from("my third memo"),
-        pri: 1,
+        body: String::from("my third memo"),
+        star: true,
     };
 
     let mut memos: Vec<Memo> = Vec::new();
@@ -41,7 +41,7 @@ fn main() {
     memos.push(memo3);
 
     match Opt::from_args() {
-        Opt::Add { name } => println!("{} added", name),
+        Opt::Add { body } => println!("{} added", body),
         Opt::Del { id } => println!("{} deleted", id),
         Opt::List {} => println!("{:#?}", memos),
     };
