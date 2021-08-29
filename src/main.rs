@@ -1,8 +1,15 @@
-extern crate simplebase;
-use serde::{Deserialize, Serialize};
-use simplebase::engine::*;
+//extern crate simplebase;
+//use serde::{Deserialize, Serialize};
+//use simplebase::engine::*;
 use structopt::StructOpt;
+mod model;
 
+fn main() {
+    model::add_memo("ciao".to_string());
+    model::list_memos();
+}
+
+/*
 #[derive(Serialize, Deserialize, Debug)]
 struct Memo {
     id: isize,
@@ -94,3 +101,4 @@ fn main() {
         Opt::List {} => println!("{:#?}", memos),
     };
 }
+*/
