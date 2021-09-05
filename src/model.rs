@@ -7,13 +7,13 @@ use std::io::BufReader;
 use std::io::{self, Seek, SeekFrom};
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Memo {
+pub struct Memo {
     id: isize,
     body: String,
     star: bool,
 }
 
-type Memos = HashMap<String, Memo>;
+pub type Memos = HashMap<String, Memo>;
 
 fn main() {
     //write_file("hello".to_string());
@@ -104,12 +104,15 @@ fn new_id(memos: &HashMap<String, Memo>) -> isize {
     new_id
 }
 
-pub fn list_memos() -> std::io::Result<()> {
+//pub fn list_memos() -> std::io::Result<()> {
+pub fn list_memos() -> std::io::Result<Memos> {
     let file = File::open("memo.json")?;
     let mut buf = BufReader::new(file);
-    let deserialized: HashMap<isize, Memo> = serde_json::from_reader(&mut buf).unwrap();
-    for (id, memo) in deserialized.iter() {
+    //let memos: HashMap<isize, Memo> = serde_json::from_reader(&mut buf).unwrap();
+    let memos: HashMap<String, Memo> = serde_json::from_reader(&mut buf).unwrap();
+    for (id, memo) in memos.iter() {
         println!("{} => {:?}", id, memo);
     }
-    Ok(())
+    //Ok(())
+    Ok(memos)
 }

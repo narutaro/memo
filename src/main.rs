@@ -1,21 +1,9 @@
 //extern crate simplebase;
 //use serde::{Deserialize, Serialize};
 //use simplebase::engine::*;
+use model::Memos;
 use structopt::StructOpt;
 mod model;
-
-fn main() {
-    model::add_memo("ciao".to_string());
-    model::list_memos();
-}
-
-/*
-#[derive(Serialize, Deserialize, Debug)]
-struct Memo {
-    id: isize,
-    body: String,
-    star: bool,
-}
 
 #[derive(StructOpt, Debug)]
 /// Help you take notes
@@ -28,77 +16,19 @@ enum Opt {
     List {},
 }
 
-// DB
-fn list(db: &RecordData) {
-    println!("----");
-    for (k, v) in &db.hash_data {
-        println!("k: {:?}, v: {:?}", k, v);
-    }
-}
-
-fn add_memo(db: &mut RecordData, memo: String) {
-    db.add_record(memo);
-}
-
 fn main() {
-    //
-    // Serde
-    //
-    let memo = Memo {
-        id: 1,
-        body: "first memo".to_string(),
-        star: true,
-    };
-
-    // Convert the Point to a JSON string.
-    let serialized = serde_json::to_string(&memo).unwrap();
-
-    // Prints serialized = {"x":1,"y":2}
-    println!("serialized = {}", serialized);
-
-    // Convert the JSON string back to a Point.
-    let deserialized: Memo = serde_json::from_str(&serialized).unwrap();
-
-    // Prints deserialized = Point { x: 1, y: 2 }
-    println!("deserialized = {:?}", deserialized);
-
-    //
-    // DB
-    //
-    let mut db = new_empty_database();
-    //db.add_record(serialized);
-    add_memo(&mut db, "added by add_memo()".to_string());
-    //db.save_database("memo.db");
-    list(&db);
-
-    //
-    // CLI
-    //
-    let memo1 = Memo {
-        id: 1,
-        body: String::from("my first memo"),
-        star: true,
-    };
-    let memo2 = Memo {
-        id: 2,
-        body: String::from("my second memo"),
-        star: false,
-    };
-    let memo3 = Memo {
-        id: 3,
-        body: String::from("my third memo"),
-        star: true,
-    };
-
-    let mut memos: Vec<Memo> = Vec::new();
-    memos.push(memo1);
-    memos.push(memo2);
-    memos.push(memo3);
+    //    model::add_memo("ciao".to_string());
+    //    model::list_memos();
 
     match Opt::from_args() {
-        Opt::Add { body } => println!("{} added", body),
-        Opt::Del { id } => println!("{} deleted", id),
-        Opt::List {} => println!("{:#?}", memos),
+        Opt::Add { body } => println!("added"),
+        Opt::Del { id } => println!("deleted"),
+        Opt::List {} => println!("{:?}", fmt(model::list_memos().unwrap())),
     };
 }
-*/
+
+fn fmt(memos: Memos) {
+    for (id, memo) in memos.iter() {
+        println!("{} => {:?}", id, memo);
+    }
+}
