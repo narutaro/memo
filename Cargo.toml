@@ -7,7 +7,7 @@ edition = "2018"
 
 [dependencies]
 structopt = "0.3"
-simplebase = "0.3.35"
+#simplebase = "0.3.35"
 
 # The core APIs, including the Serialize and Deserialize traits. Always
 # required when using Serde. The "derive" feature is only required when
