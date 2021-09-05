@@ -21,7 +21,10 @@ fn main() {
     //    model::list_memos();
 
     match Opt::from_args() {
-        Opt::Add { body } => println!("added"),
+        Opt::Add { body } => {
+            model::add_memo(body);
+            //println!("{} added", &body);
+        }
         Opt::Del { id } => println!("deleted"),
         Opt::List {} => println!("{:?}", fmt(model::list_memos().unwrap())),
     };
