@@ -28,7 +28,9 @@ fn main() {
 }
 
 fn fmt(memos: Memos) {
+    println!("{0: ^5} | {1: ^150} | {2: ^5}", "#", "description", "star");
     for (id, memo) in memos.iter() {
-        println!("{} => {:?}", id, memo);
+        println!("{0: <5} | {1: <150} | {2: <5}", id, memo.body, memo.star);
+        //println!("{} => {:?}", id, memo);
     }
 }

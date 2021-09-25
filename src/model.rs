@@ -8,9 +8,9 @@ use std::io::{Seek, SeekFrom};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Memo {
-    id: isize,
-    body: String,
-    star: bool,
+    pub id: isize,
+    pub body: String,
+    pub star: bool,
 }
 
 pub type Memos = HashMap<String, Memo>;
