@@ -139,11 +139,7 @@ pub fn find_memo(keyword: String) -> std::io::Result<Memos> {
 
     let mut found = HashMap::<String, Memo>::new();
 
-    // 参照しながら削除しようとしておかしくなっている
-    // return keys which matched and then remove them later
     for (key, value) in memos {
-        //println!("{} / {:?}", key, value);
-        //println!("body = {}", value.body);
         match value.body.contains(&keyword) {
             true => {
                 found.insert(key, value);

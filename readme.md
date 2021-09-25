@@ -10,8 +10,9 @@ FLAGS:
     -V, --version    Prints version information
 
 SUBCOMMANDS:
-    add     add a memo
-    del     delete a memo
+    add     Add a memo
+    del     Delete a memo
+    find    Find memo
     help    Prints this message or the help of the given subcommand(s)
-    list    list memos
+    list    List memos
 ```
