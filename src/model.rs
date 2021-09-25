@@ -45,14 +45,12 @@ fn read_file() -> std::io::Result<()> {
         .read(true)
         .write(true)
         .open("memo.json")?;
-    //let memos_file = File::open("foo.json").unwrap();
     let reader = BufReader::new(memos_file);
     let memos: Memos = serde_json::from_reader(reader)?;
     println!("memo_text: {:?}", memos);
     Ok(())
 }
 
-//pub fn add_memo(body: String) -> std::io::Result<()> {
 pub fn add_memo(body: String) -> std::io::Result<Memos> {
     // read current memos
     let mut file = OpenOptions::new()
@@ -62,8 +60,7 @@ pub fn add_memo(body: String) -> std::io::Result<Memos> {
 
     let reader = BufReader::new(&file);
     let mut memos: Memos = serde_json::from_reader(reader)?;
-    // TODO - what if the file is empty
-    //println!("before - memos: {:#?}", &memos);
+    // TODO - handle empty file
 
     // write new memos
     let memo = Memo {
@@ -78,21 +75,17 @@ pub fn add_memo(body: String) -> std::io::Result<Memos> {
 
     file.seek(SeekFrom::Start(0))?;
     write!(&file, "{}", memos_json)?;
-    //println!("after - memos: {:#?}", &memos);
 
-    //Ok(())
     Ok(memos)
 }
 
 pub fn delete_memo(id: String) -> std::io::Result<Memos> {
     // read current memos
-    //let mut file = OpenOptions::new().read(true).open("memo.json")?;
     let file = OpenOptions::new().read(true).open("memo.json")?;
 
     let reader = BufReader::new(&file);
     let mut memos: Memos = serde_json::from_reader(reader)?;
-    // TODO - what if the file is empty
-    //println!("before - memos: {:#?}", &memos);
+    // TODO - handle empty file
     drop(file);
 
     // remove
@@ -100,35 +93,25 @@ pub fn delete_memo(id: String) -> std::io::Result<Memos> {
 
     let memos_json = serde_json::to_string(&memos).unwrap();
 
-    //let mut file = OpenOptions::new()
     let file = OpenOptions::new()
         .truncate(true)
         .write(true)
         .open("memo.json")?;
     write!(&file, "{}", memos_json)?;
-    //println!("after - memos: {:#?}", &memos);
 
     Ok(memos)
 }
 
 fn new_id(memos: &HashMap<String, Memo>) -> isize {
     let max_id = memos.keys().max().unwrap();
-    //println!("max_id: {:#?}", max_id);
     let new_id = max_id.parse::<isize>().unwrap() + 1;
-    //println!("new_id: {}", new_id);
     new_id
 }
 
-//pub fn list_memos() -> std::io::Result<()> {
 pub fn list_memos() -> std::io::Result<Memos> {
     let file = File::open("memo.json")?;
     let mut buf = BufReader::new(file);
-    //let memos: HashMap<isize, Memo> = serde_json::from_reader(&mut buf).unwrap();
     let memos: HashMap<String, Memo> = serde_json::from_reader(&mut buf).unwrap();
-    //for (id, memo) in memos.iter() {
-    //    println!("{} => {:?}", id, memo);
-    //}
-    //Ok(())
     Ok(memos)
 }
 

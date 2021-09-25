@@ -16,14 +16,11 @@ enum Opt {
 }
 
 fn main() {
-    //    model::add_memo("ciao".to_string());
-    //    model::list_memos();
-
     match Opt::from_args() {
-        Opt::Add { body } => println!("{:?}", fmt(model::add_memo(body).unwrap())),
-        Opt::Del { id } => println!("{:?}", fmt(model::delete_memo(id).unwrap())),
-        Opt::List {} => println!("{:?}", fmt(model::list_memos().unwrap())),
-        Opt::Find { body } => println!("{:?}", fmt(model::find_memo(body).unwrap())),
+        Opt::Add { body } => fmt(model::add_memo(body).unwrap()),
+        Opt::Del { id } => fmt(model::delete_memo(id).unwrap()),
+        Opt::List {} => fmt(model::list_memos().unwrap()),
+        Opt::Find { body } => fmt(model::find_memo(body).unwrap()),
     };
 }
 
