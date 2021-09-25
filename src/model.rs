@@ -86,7 +86,8 @@ pub fn add_memo(body: String) -> std::io::Result<Memos> {
 
 pub fn delete_memo(id: String) -> std::io::Result<Memos> {
     // read current memos
-    let mut file = OpenOptions::new().read(true).open("memo.json")?;
+    //let mut file = OpenOptions::new().read(true).open("memo.json")?;
+    let file = OpenOptions::new().read(true).open("memo.json")?;
 
     let reader = BufReader::new(&file);
     let mut memos: Memos = serde_json::from_reader(reader)?;
@@ -99,7 +100,8 @@ pub fn delete_memo(id: String) -> std::io::Result<Memos> {
 
     let memos_json = serde_json::to_string(&memos).unwrap();
 
-    let mut file = OpenOptions::new()
+    //let mut file = OpenOptions::new()
+    let file = OpenOptions::new()
         .truncate(true)
         .write(true)
         .open("memo.json")?;
@@ -128,4 +130,27 @@ pub fn list_memos() -> std::io::Result<Memos> {
     //}
     //Ok(())
     Ok(memos)
+}
+
+pub fn find_memo(keyword: String) -> std::io::Result<Memos> {
+    let file = File::open("memo.json")?;
+    let buf = BufReader::new(file);
+    let memos: HashMap<String, Memo> = serde_json::from_reader(buf).unwrap();
+
+    let mut found = HashMap::<String, Memo>::new();
+
+    // 参照しながら削除しようとしておかしくなっている
+    // return keys which matched and then remove them later
+    for (key, value) in memos {
+        //println!("{} / {:?}", key, value);
+        //println!("body = {}", value.body);
+        match value.body.contains(&keyword) {
+            true => {
+                found.insert(key, value);
+            }
+            _ => (),
+        }
+    }
+
+    Ok(found)
 }

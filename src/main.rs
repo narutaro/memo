@@ -1,6 +1,3 @@
-//extern crate simplebase;
-//use serde::{Deserialize, Serialize};
-//use simplebase::engine::*;
 use model::Memos;
 use structopt::StructOpt;
 mod model;
@@ -8,12 +5,14 @@ mod model;
 #[derive(StructOpt, Debug)]
 /// Help you take notes
 enum Opt {
-    /// add a memo
+    /// Add a memo
     Add { body: String },
-    /// delete a memo
+    /// Delete a memo
     Del { id: String },
-    /// list memos
+    /// List memos
     List {},
+    /// Find memo
+    Find { body: String },
 }
 
 fn main() {
@@ -24,6 +23,7 @@ fn main() {
         Opt::Add { body } => println!("{:?}", fmt(model::add_memo(body).unwrap())),
         Opt::Del { id } => println!("{:?}", fmt(model::delete_memo(id).unwrap())),
         Opt::List {} => println!("{:?}", fmt(model::list_memos().unwrap())),
+        Opt::Find { body } => println!("{:?}", fmt(model::find_memo(body).unwrap())),
     };
 }
 
